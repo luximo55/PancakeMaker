@@ -1,11 +1,30 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
+
 
 using namespace std;
 
+class Pancakes{
+    public:
+        string name = "Regular";
+        vector<string> ingredients;
+
+    Pancakes(int size, string type){
+        ingredients.resize(size);
+        if(type == "regular"){
+            ingredients[0] = "Milk";
+            ingredients[1] = "Flour";
+            ingredients[2] = "Eggs";
+        } else if(type == "oat"){
+
+        }
+    }
+};
+
+
 int ingredientCalc()
 {
-    double milkAmt;
     double flourAmt;
     int eggAmt;
     int totalPancakes;
@@ -49,11 +68,13 @@ int main()
 {
     int usrChoice;
     int numOfPancakes;
+    Pancakes regular(3, "regular");
+    Pancakes oat(3, "oat");
 
     cout << "Welcome to Pancake Maker: Cpp edition!\nThis program is made as a practice project for learning cpp" << endl;
     //The main menu we return to when we want to choose options
     menu:
-    cout << "Choose what you'd like to do:\n1 Walk-through\n2 Ingredient calculator\n3 Ingredients\n0 Quit" << endl;
+    cout << "Choose what you'd like to do:\n1 Walk-through\n2 Ingredient calculator\n3 Ingredients (Additional recipes)\n0 Quit" << endl;
     cin >> usrChoice;
     switch (usrChoice){
     case 1:
@@ -65,10 +86,27 @@ int main()
         system("cls");
         ingredientCalc();
         break;
-    case 3:
+    case 3:{
         system("cls");
+        string pancakeChoice;
+        cout << "Choose what type of pancakes you'd like to see ingredients of (1. Regular, 2. Oat): ";
+        cin >> pancakeChoice;
+        if(pancakeChoice == "Regular" || pancakeChoice == "regular"){
+            for(int i = 0; i < size(regular.ingredients); i++){
+                cout << regular.ingredients[i] << endl;
+            }
+        } else if(pancakeChoice == "Oat" || pancakeChoice == "oat"){
+            for(int i = 0; i < size(regular.ingredients); i++){
+                cout << oat.ingredients[i] << endl;
+            }
+        }
+
         cout << "temp 3" << endl;
+        cout << "Press any key to continue...";
+        cin.ignore();
+        cin.get();
         break;
+    }
     case 0:
         system("cls");
         cout << "See you next time!";
