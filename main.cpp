@@ -30,7 +30,7 @@ int ingredientCalc()
         Flour - 100g
         Eggs - 2
     */
-    //These formulas could be shortened from 250*10 to 25, but for readability it's kept as is
+    //These formulas could be shortened from 250*10 to 25(yes, this is correct, dw), but for readability it's kept as is
     //Amounts are being divided by amount of ingredients needed for 10 pancakes, and then multiplied by 10
     double milkAmt;
     double flourAmt;
@@ -49,10 +49,10 @@ int ingredientCalc()
     //Eggs
     cout << "How many eggs do you have?" << endl;
     cin >> eggAmt;
-    cout << "You have eggs for " << floor(eggAmt / 2 * 10) << " pancakes.\n" << endl;
+    cout << "You have eggs for " << floor((double)eggAmt / 2 * 10) << " pancakes.\n" << endl;
 
     //Final calculation
-    totalPancakes = floor(fmin(fmin(milkAmt/200*10, flourAmt/200*10), eggAmt/2*10));
+    totalPancakes = floor(fmin(fmin(milkAmt/200*10, flourAmt/200*10), (double)eggAmt/2*10));
     if(totalPancakes > 0){
         cout << "You can make " << totalPancakes << " pancakes!" << endl;
     } else if(totalPancakes == 0){
