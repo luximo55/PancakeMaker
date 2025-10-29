@@ -25,18 +25,26 @@ class Pancakes{
 
 int ingredientCalc()
 {
+    /*The amount of pancakes is calculated with following amount (per 10 pancakes):
+        Milk - 250ml
+        Flour - 100g
+        Eggs - 2
+    */
+    //These formulas could be shortened from 250*10 to 25, but for readability it's kept as is
+    //Amounts are being divided by amount of ingredients needed for 10 pancakes, and then multiplied by 10
+    double milkAmt;
     double flourAmt;
     int eggAmt;
     int totalPancakes;
     //Milk
     cout << "How much milk do you have?" << endl;
     cin >> milkAmt;
-    cout << "You have milk for " << floor(milkAmt / 200 * 10) << " pancakes." << endl;
+    cout << "You have milk for " << floor(milkAmt / 250 * 10) << " pancakes." << endl;
 
     //Flour
     cout << "How much flour do you have?" << endl;
     cin >> flourAmt;
-    cout << "You have flour for " << floor(flourAmt / 200 * 10) << " pancakes." << endl;
+    cout << "You have flour for " << floor(flourAmt / 100 * 10) << " pancakes." << endl;
 
     //Eggs
     cout << "How many eggs do you have?" << endl;
