@@ -5,11 +5,13 @@
 
 using namespace std;
 
+//Pancakes class that defines different types of pancakes
 class Pancakes{
     public:
         string name = "Regular";
         vector<string> ingredients;
 
+    //Initializes main attributes for different types of pancakes
     Pancakes(int size, string type){
         ingredients.resize(size);
         if(type == "regular"){
@@ -52,7 +54,8 @@ int ingredientCalc()
     cout << "You have eggs for " << floor((double)eggAmt / 2 * 10) << " pancakes.\n" << endl;
 
     //Final calculation
-    totalPancakes = floor(fmin(fmin(milkAmt/200*10, flourAmt/200*10), (double)eggAmt/2*10));
+    //The program finds the lowest amount of pancakes that can be made with provided ingredients
+    totalPancakes = floor(fmin(fmin(milkAmt/250*10, flourAmt/100*10), (double)eggAmt/2*10));
     if(totalPancakes > 0){
         cout << "You can make " << totalPancakes << " pancakes!" << endl;
     } else if(totalPancakes == 0){
@@ -65,35 +68,57 @@ int ingredientCalc()
     return totalPancakes;
 }
 
-void instructions(int numOfPancakes)
+void instructions(int numOfPancakes, string pancakeType)
 {
     //instructions based of the number of pancakes we can make
     //calculate the amount of each ingredient
-    cout << numOfPancakes << "\ninstructions in works" << endl;
+    switch (pancakeType)
+    case "regular":
+        double recipeMilk = (double)numOfPancakes / 10 * 250;
+        double recipeFlour = (double)numOfPancakes / 10 * 100;
+        int recipeEggs = (double)numOfPancakes / 10 * 2;
+        cout << "To make " << numOfPancakes <<", you're going to need:\n" << recipeMilk << "ml of milk\n" << recipeFlour << "g, of flour\n" << recipeEggs << " eggs" << endl;
+        cout << "Press any key to continue...";
+        cin.ignore();
+        cin.get();
+        system("cls");
+        //--Recipe instructions--
+        break;
+    case "oat":
+        //--Ingredients--
+        //--Recipe instructions--
+        break;
 }
 
 int main()
 {
     int usrChoice;
     int numOfPancakes;
+    string pancakeChoice = "regular";
     Pancakes regular(3, "regular");
     Pancakes oat(3, "oat");
 
     cout << "Welcome to Pancake Maker: Cpp edition!\nThis program is made as a practice project for learning cpp" << endl;
     //The main menu we return to when we want to choose options
     menu:
-    cout << "Choose what you'd like to do:\n1 Walk-through\n2 Ingredient calculator\n3 Ingredients (Additional recipes)\n0 Quit" << endl;
+    cout << "Choose what you'd like to do:\n1 Walk-through\n2 Ingredient calculator\n3 Ingredients (Additional recipes)\n4 Pancake type\n0 Quit" << endl;
     cin >> usrChoice;
     switch (usrChoice){
+    //Walk-through
+    //It runs the calculator and the recipe, linking the two together so that the recipe is adjusted for the amount
     case 1:
         system("cls");
         numOfPancakes = ingredientCalc();
-        instructions(numOfPancakes);
+        instructions(numOfPancakes, pancakeChoice);
         break;
+    //Ingredient calculator
+    //Runs the calculator to calculate how many pancakes can be made with provided ingredients
     case 2:
         system("cls");
         ingredientCalc();
         break;
+    //Ingredietns
+    //Runs a list of ingredients for other types of pancakes
     case 3:{
         system("cls");
         string pancakeChoice;
@@ -108,20 +133,43 @@ int main()
                 cout << oat.ingredients[i] << endl;
             }
         }
-
-        cout << "temp 3" << endl;
         cout << "Press any key to continue...";
         cin.ignore();
         cin.get();
         break;
     }
+    case 4:
+        system("cls");
+        cout << "Current pancake type: " << pancakeChoice << endl;
+        cout << "What would you like to do:\n1 Regular pancakes\n2 Oat pancakes\n0 Back to menu" << endl;
+        cin >> usrChoice;
+        switch (usrChoice)
+        {
+        case 1:
+            pancakeChoice = "regular";
+            system("cls");
+            break;
+        case 2:
+            pancakeChoice = "oat";
+            system("cls");
+            break;
+        case 0:
+            system("cls");
+            break;
+        default:
+            break;
+        }
+        break;
+    //Quit
     case 0:
         system("cls");
         cout << "See you next time!";
         return 0;
+    //Invalid input handler
     default:
         system("cls");
         cout << "Invalid choice." << endl;
     }
+    //Return to menu when exiting from the switch (happens when finishing with the use of one of the tools)
     goto menu;
 }
