@@ -10,14 +10,19 @@ class Pancakes{
     public:
         string name = "Regular";
         vector<string> ingredients;
+        vector<int> ingredientAmt;
 
     //Initializes main attributes for different types of pancakes
     Pancakes(int size, string type){
         ingredients.resize(size);
+        ingredientAmt.resize(size);
         if(type == "regular"){
             ingredients[0] = "Milk";
+            ingredientAmt[0] = 250;
             ingredients[1] = "Flour";
+            ingredientAmt[1] = 100;
             ingredients[2] = "Eggs";
+            ingredientAmt[2] = 2;
         } else if(type == "oat"){
 
         }
@@ -58,7 +63,7 @@ int ingredientCalc(string pancakeType)
         //The program finds the lowest amount of pancakes that can be made with provided ingredients
         totalPancakes = floor(fmin(fmin(milkAmt/250*10, flourAmt/100*10), (double)eggAmt/2*10));
     }else if(pancakeType == "oat"){
-
+        //--Recipe ingredients--
     }
 
     if(totalPancakes > 0){
@@ -107,6 +112,7 @@ int main()
     cout << "Choose what you'd like to do:\n1 Walk-through\n2 Ingredient calculator\n3 Ingredients (Additional recipes)\n4 Pancake type\n0 Quit" << endl;
     cin >> usrChoice;
     switch (usrChoice){
+
     //Walk-through
     //It runs the calculator and the recipe, linking the two together so that the recipe is adjusted for the amount
     case 1:
@@ -114,24 +120,39 @@ int main()
         numOfPancakes = ingredientCalc(pancakeChoice);
         instructions(numOfPancakes, pancakeChoice);
         break;
+
     //Ingredient calculator
     //Runs the calculator to calculate how many pancakes can be made with provided ingredients
     case 2:
         system("cls");
         ingredientCalc(pancakeChoice);
         break;
+
     //Ingredietns
-    //Runs a list of ingredients for other types of pancakes
+    //Runs a list of ingredients for a chosen pancake type
     case 3:{
         system("cls");
-        string pancakeChoice;
-        cout << "Choose what type of pancakes you'd like to see ingredients of (1. Regular, 2. Oat): ";
-        cin >> pancakeChoice;
-        if(pancakeChoice == "Regular" || pancakeChoice == "regular"){
+        pancakeChoice;
+        int pancakeAmt;
+        cout << "How many " << pancakeChoice << " pancakes would you like to make?" << endl;
+        cin >> pancakeAmt;
+        cout << "To make " << pancakeChoice << " pancakes you're going to need:" << endl;
+        if(pancakeChoice == "regular"){
             for(int i = 0; i < size(regular.ingredients); i++){
-                cout << regular.ingredients[i] << endl;
+                cout << regular.ingredients[i] << " - ";
+                switch (i){
+                case 0:
+                    cout << (double)pancakeAmt / 10 * 250 <<"ml" << endl;
+                    break;
+                case 1:
+                    cout << (double)pancakeAmt / 10 * 100 <<"g" << endl;
+                    break;
+                case 2:
+                    cout << (double)pancakeAmt / 10 * 2 << endl;
+                    break;
+                }
             }
-        } else if(pancakeChoice == "Oat" || pancakeChoice == "oat"){
+        } else if(pancakeChoice == "oat"){
             for(int i = 0; i < size(regular.ingredients); i++){
                 cout << oat.ingredients[i] << endl;
             }
