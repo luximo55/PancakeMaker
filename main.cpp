@@ -25,37 +25,42 @@ class Pancakes{
 };
 
 
-int ingredientCalc()
+int ingredientCalc(string pancakeType)
 {
-    /*The amount of pancakes is calculated with following amount (per 10 pancakes):
-        Milk - 250ml
-        Flour - 100g
-        Eggs - 2
-    */
-    //These formulas could be shortened from 250*10 to 25(yes, this is correct, dw), but for readability it's kept as is
-    //Amounts are being divided by amount of ingredients needed for 10 pancakes, and then multiplied by 10
-    double milkAmt;
-    double flourAmt;
-    int eggAmt;
     int totalPancakes;
-    //Milk
-    cout << "How much milk do you have?" << endl;
-    cin >> milkAmt;
-    cout << "You have milk for " << floor(milkAmt / 250 * 10) << " pancakes." << endl;
+    if(pancakeType == "regular"){
+        /*The amount of pancakes is calculated with following amount (per 10 pancakes):
+            Milk - 250ml
+            Flour - 100g
+            Eggs - 2
+        */
+        //These formulas could be shortened from 250*10 to 25(yes, this is correct, dw), but for readability it's kept as is
+        //Amounts are being divided by amount of ingredients needed for 10 pancakes, and then multiplied by 10
+        double milkAmt;
+        double flourAmt;
+        int eggAmt;
+        //Milk
+        cout << "How much milk do you have?" << endl;
+        cin >> milkAmt;
+        cout << "You have milk for " << floor(milkAmt / 250 * 10) << " pancakes." << endl;
 
-    //Flour
-    cout << "How much flour do you have?" << endl;
-    cin >> flourAmt;
-    cout << "You have flour for " << floor(flourAmt / 100 * 10) << " pancakes." << endl;
+        //Flour
+        cout << "How much flour do you have?" << endl;
+        cin >> flourAmt;
+        cout << "You have flour for " << floor(flourAmt / 100 * 10) << " pancakes." << endl;
 
-    //Eggs
-    cout << "How many eggs do you have?" << endl;
-    cin >> eggAmt;
-    cout << "You have eggs for " << floor((double)eggAmt / 2 * 10) << " pancakes.\n" << endl;
+        //Eggs
+        cout << "How many eggs do you have?" << endl;
+        cin >> eggAmt;
+        cout << "You have eggs for " << floor((double)eggAmt / 2 * 10) << " pancakes.\n" << endl;
 
-    //Final calculation
-    //The program finds the lowest amount of pancakes that can be made with provided ingredients
-    totalPancakes = floor(fmin(fmin(milkAmt/250*10, flourAmt/100*10), (double)eggAmt/2*10));
+        //Final calculation
+        //The program finds the lowest amount of pancakes that can be made with provided ingredients
+        totalPancakes = floor(fmin(fmin(milkAmt/250*10, flourAmt/100*10), (double)eggAmt/2*10));
+    }else if(pancakeType == "oat"){
+
+    }
+
     if(totalPancakes > 0){
         cout << "You can make " << totalPancakes << " pancakes!" << endl;
     } else if(totalPancakes == 0){
@@ -72,8 +77,7 @@ void instructions(int numOfPancakes, string pancakeType)
 {
     //instructions based of the number of pancakes we can make
     //calculate the amount of each ingredient
-    switch (pancakeType)
-    case "regular":
+    if (pancakeType == "regular"){
         double recipeMilk = (double)numOfPancakes / 10 * 250;
         double recipeFlour = (double)numOfPancakes / 10 * 100;
         int recipeEggs = (double)numOfPancakes / 10 * 2;
@@ -83,11 +87,10 @@ void instructions(int numOfPancakes, string pancakeType)
         cin.get();
         system("cls");
         //--Recipe instructions--
-        break;
-    case "oat":
+    } else if(pancakeType == "oat"){
         //--Ingredients--
         //--Recipe instructions--
-        break;
+    }
 }
 
 int main()
@@ -108,14 +111,14 @@ int main()
     //It runs the calculator and the recipe, linking the two together so that the recipe is adjusted for the amount
     case 1:
         system("cls");
-        numOfPancakes = ingredientCalc();
+        numOfPancakes = ingredientCalc(pancakeChoice);
         instructions(numOfPancakes, pancakeChoice);
         break;
     //Ingredient calculator
     //Runs the calculator to calculate how many pancakes can be made with provided ingredients
     case 2:
         system("cls");
-        ingredientCalc();
+        ingredientCalc(pancakeChoice);
         break;
     //Ingredietns
     //Runs a list of ingredients for other types of pancakes
