@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/*  In many functions in else ifs and similar functions have comments only on the first instance of that type of calculation
+    So a calculation in else if that is done in a same or a similar way as in its if part will not be explained due to ambiguity
+*/
 //Pancakes class that defines different types of pancakes
 class Pancakes{
     public:
@@ -24,7 +27,14 @@ class Pancakes{
             ingredients[2] = "Eggs";
             ingredientAmt[2] = 2;
         } else if(type == "oat"){
-
+            ingredients[0] = "Milk";
+            ingredientAmt[0] = 500;
+            ingredients[1] = "Oats";
+            ingredientAmt[1] = 200;
+            ingredients[2] = "Eggs";
+            ingredientAmt[2] = 2;
+            ingredients[3] = "Baking powder";
+            ingredientAmt[3] = 12;
         }
     }
 };
@@ -63,7 +73,38 @@ int ingredientCalc(string pancakeType)
         //The program finds the lowest amount of pancakes that can be made with provided ingredients
         totalPancakes = floor(fmin(fmin(milkAmt/250*10, flourAmt/100*10), (double)eggAmt/2*10));
     }else if(pancakeType == "oat"){
-        //--Recipe ingredients--
+        /*The amount of pancakes is calculated with following amount (per 10 pancakes):
+            Milk - 500ml
+            Oats - 200g
+            Eggs - 2
+            Baking powder - 12g
+        */
+        double milkAmt;
+        double oatAmt;
+        int eggAmt;
+        double bakPowAmt;
+
+        //Milk
+        cout << "How much milk do you have?" << endl;
+        cin >> milkAmt;
+        cout << "You have milk for " << floor(milkAmt / 500 * 10) << " pancakes." << endl;
+
+        //Flour
+        cout << "How much oats do you have?" << endl;
+        cin >> oatAmt;
+        cout << "You have oats for " << floor(oatAmt / 200 * 10) << " pancakes." << endl;
+
+        //Eggs
+        cout << "How many eggs do you have?" << endl;
+        cin >> eggAmt;
+        cout << "You have eggs for " << floor((double)eggAmt / 2 * 10) << " pancakes." << endl;
+        //Baking powder
+        cout << "How much baking powder do you have?" << endl;
+        cin >> bakPowAmt;
+        cout << "You have baking powder for " << floor((double)bakPowAmt / 12 * 10) << " pancakes.\n" << endl;
+
+        //Final calculation
+        totalPancakes = floor(fmin(fmin(milkAmt/500*10, oatAmt/200*10), fmin((double)eggAmt/2*10, bakPowAmt/12*10)));
     }
 
     if(totalPancakes > 0){
@@ -86,14 +127,22 @@ void instructions(int numOfPancakes, string pancakeType)
         double recipeMilk = (double)numOfPancakes / 10 * 250;
         double recipeFlour = (double)numOfPancakes / 10 * 100;
         int recipeEggs = (double)numOfPancakes / 10 * 2;
-        cout << "To make " << numOfPancakes <<", you're going to need:\n" << recipeMilk << "ml of milk\n" << recipeFlour << "g, of flour\n" << recipeEggs << " eggs" << endl;
+        cout << "To make " << numOfPancakes <<", you're going to need:\n" << recipeMilk << "ml of milk\n" << recipeFlour << "g of flour\n" << recipeEggs << " eggs" << endl;
         cout << "Press any key to continue...";
         cin.ignore();
         cin.get();
         system("cls");
         //--Recipe instructions--
     } else if(pancakeType == "oat"){
-        //--Ingredients--
+        double recipeMilk = (double)numOfPancakes / 10 * 500;
+        double recipeOats = (double)numOfPancakes / 10 * 200;
+        int recipeEggs = (double)numOfPancakes / 10 * 2;
+        double recipeBakPow = (double)numOfPancakes / 10 * 12;
+        cout << "To make " << numOfPancakes <<", you're going to need:\n" << recipeMilk << "ml of milk\n" << recipeOats << "g of oats\n" << recipeEggs << " eggs\n" << recipeBakPow << "g of baking powder" << endl;
+        cout << "Press any key to continue...";
+        cin.ignore();
+        cin.get();
+        system("cls");
         //--Recipe instructions--
     }
 }
@@ -104,7 +153,7 @@ int main()
     int numOfPancakes;
     string pancakeChoice = "regular";
     Pancakes regular(3, "regular");
-    Pancakes oat(3, "oat");
+    Pancakes oat(4, "oat");
 
     cout << "Welcome to Pancake Maker: Cpp edition!\nThis program is made as a practice project for learning cpp" << endl;
     //The main menu we return to when we want to choose options
@@ -136,16 +185,16 @@ int main()
         int pancakeAmt;
         cout << "How many " << pancakeChoice << " pancakes would you like to make?" << endl;
         cin >> pancakeAmt;
-        cout << "To make " << pancakeChoice << " pancakes you're going to need:" << endl;
+        cout << "To make " << pancakeAmt << " " << pancakeChoice << " pancakes you're going to need:" << endl;
         if(pancakeChoice == "regular"){
             for(int i = 0; i < size(regular.ingredients); i++){
                 cout << regular.ingredients[i] << " - ";
                 switch (i){
                 case 0:
-                    cout << (double)pancakeAmt / 10 * 250 <<"ml" << endl;
+                    cout << (double)pancakeAmt / 10 * 250 << "ml" << endl;
                     break;
                 case 1:
-                    cout << (double)pancakeAmt / 10 * 100 <<"g" << endl;
+                    cout << (double)pancakeAmt / 10 * 100 << "g" << endl;
                     break;
                 case 2:
                     cout << (double)pancakeAmt / 10 * 2 << endl;
@@ -153,13 +202,28 @@ int main()
                 }
             }
         } else if(pancakeChoice == "oat"){
-            for(int i = 0; i < size(regular.ingredients); i++){
-                cout << oat.ingredients[i] << endl;
+            for(int i = 0; i < size(oat.ingredients); i++){
+                cout << oat.ingredients[i] << " - ";
+                switch (i){
+                case 0:
+                    cout << (double)pancakeAmt / 10 * 500 << "ml" << endl;
+                    break;
+                case 1:
+                    cout << (double)pancakeAmt / 10 * 200 << "g" << endl;
+                    break;
+                case 2:
+                    cout << (double)pancakeAmt / 10 * 2 << endl;
+                    break;
+                case 3:
+                    cout << (double)pancakeAmt / 10 * 12 << "g" << endl;
+                    break;
+                }
             }
         }
         cout << "Press any key to continue...";
         cin.ignore();
         cin.get();
+        system("cls");
         break;
     }
     case 4:
